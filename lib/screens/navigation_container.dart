@@ -1,33 +1,47 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todo_app/constants.dart';
+import 'package:todo_app/data/dictionary.dart';
+import 'package:todo_app/data/models/lessons.dart';
+import 'package:todo_app/widgets/custDrawer.dart';
 import 'package:todo_app/widgets/cust_appbar.dart';
 import 'package:todo_app/widgets/cust_bottom_navbar.dart';
 import 'package:todo_app/screens/lessons_screen.dart';
+
+import '../helpers/getDataFromJson.dart';
 
 class NavigationContainer extends StatefulWidget {
   const NavigationContainer({super.key});
 
   @override
-  State<NavigationContainer> createState() => _ToDoScreenState();
+  State<NavigationContainer> createState() => _NavigationContainerState();
 }
 
-class _ToDoScreenState extends State<NavigationContainer> {
+class _NavigationContainerState extends State<NavigationContainer> {
+  final List<LessonsItem> lessons = [];
   int _selectedIndex = 0;
-  String _title = 'Lessons';
+  
   static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+      TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white);
 
-  final List<Widget> _widgetOptions = <Widget>[
+  final List<Widget> _widgetOptions = [
+    //-- 1 Tab
     const LessonsScreen(),
+    //-- 2 Tab
     const Text(
-      'Will be added later',
+      Dictionary.willBeAddedLater,
       style: optionStyle,
     ),
+    //-- 3 Tab
     const Text(
-      'Will be added later',
+      Dictionary.willBeAddedLater,
       style: optionStyle,
     ),
+    //-- 4 Tab
     const Text(
-      'Will be added later',
+      Dictionary.willBeAddedLater,
       style: optionStyle,
     ),
   ];
@@ -35,35 +49,25 @@ class _ToDoScreenState extends State<NavigationContainer> {
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
-      switch (index) {
-        case 0:
-          _title = "Lessons";
-          break;
-        case 1:
-          _title = "Calendar";
-          break;
-        case 2:
-          _title = "Wallet";
-          break;
-        case 3:
-          _title = "Account";
-          break;
-        default:
-          _title = "ToDo";
-      }
     });
   }
 
   @override
   Widget build(BuildContext context) {
-      return Scaffold(
-      backgroundColor: const Color.fromRGBO(58, 66, 86, 1.0),
-      appBar: topAppBar(_title),
-      endDrawer: const Drawer(),
-      body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
+    return Provider(
+      create: (context) {
+        return lessons;
+      },
+      child: Scaffold(
+        backgroundColor: mainColor,
+        body: Center(
+          child: _widgetOptions.elementAt(_selectedIndex),
+        ),
+        bottomNavigationBar: CustBottomNavBar(
+          selectedIndex: _selectedIndex,
+          onItemTapped: _onItemTapped,
+        ),
       ),
-      bottomNavigationBar: custBottomNavbar(_selectedIndex, _onItemTapped),
     );
   }
 }

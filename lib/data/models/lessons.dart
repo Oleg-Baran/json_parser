@@ -3,8 +3,9 @@ class Lessons {
   Lessons({this.lessons});
 
   factory Lessons.fromJson(Map<String, dynamic> json) => Lessons(
-        lessons: List<LessonsItem>.from(json["lessons"].map((x) => LessonsItem.fromJson(x))),
-    );
+        lessons: List<LessonsItem>.from(
+            json["lessons"].map((x) => LessonsItem.fromJson(x))),
+      );
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = {};
@@ -21,9 +22,15 @@ class LessonsItem {
   double? indicatorValue;
   int? price;
   String? content;
+  bool? complete;
 
   LessonsItem(
-      {this.title, this.level, this.indicatorValue, this.price, this.content});
+      {this.title,
+      this.level,
+      this.indicatorValue,
+      this.price,
+      this.content,
+      this.complete = true});
 
   LessonsItem.fromJson(Map<String, dynamic> json) {
     title = json['title'];
@@ -31,6 +38,7 @@ class LessonsItem {
     indicatorValue = json['indicatorValue'];
     price = json['price'];
     content = json['content'];
+    complete = json['complete'];
   }
 
   Map<String, dynamic> toJson() {
@@ -40,6 +48,7 @@ class LessonsItem {
     data['indicatorValue'] = indicatorValue;
     data['price'] = price;
     data['content'] = content;
+    data['complete'] = complete;
     return data;
   }
 }

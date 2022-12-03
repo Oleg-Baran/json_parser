@@ -1,34 +1,43 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app/constants.dart';
+import 'package:todo_app/data/dictionary.dart';
 
-BottomNavigationBar custBottomNavbar(int selectedIndex, void Function(int i) onItemTapped) {
-  return BottomNavigationBar(
+class CustBottomNavBar extends StatelessWidget {
+  const CustBottomNavBar({super.key, required this.selectedIndex, required this.onItemTapped});
+  final int selectedIndex;
+  final void Function(int i) onItemTapped;
+
+  @override
+  Widget build(BuildContext context) {
+    return BottomNavigationBar(
     items: const <BottomNavigationBarItem>[
       BottomNavigationBarItem(
         icon: Icon(Icons.book_outlined),
-        label: '___',
+        label: Dictionary.underScores,
       ),
       BottomNavigationBarItem(
         icon: Icon(Icons.calendar_month_outlined),
-        label: '___',
+        label: Dictionary.underScores,
       ),
       BottomNavigationBarItem(
         icon: Icon(Icons.money),
-        label: '___',
+        label: Dictionary.underScores,
       ),
       BottomNavigationBarItem(
         icon: Icon(Icons.account_circle_outlined),
-        label: '___',
+        label: Dictionary.underScores,
       ),
     ],
     currentIndex: selectedIndex,
     type: BottomNavigationBarType.fixed,
     iconSize: 26,
-    unselectedItemColor: const Color.fromRGBO(190, 190, 190, 1),
-    backgroundColor: const Color.fromRGBO(58, 66, 86, 1.0),
-    selectedItemColor: Colors.amber,
+    unselectedItemColor: unselectedColor,
+    backgroundColor: mainColor,
+    selectedItemColor: secondaryColor,
     showUnselectedLabels: false,
     selectedLabelStyle:
         const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
     onTap: onItemTapped,
   );
+  }
 }
