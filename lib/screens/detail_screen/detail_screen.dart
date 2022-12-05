@@ -1,19 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/constants.dart';
 import 'package:todo_app/data/dictionary.dart';
 import 'package:todo_app/data/models/lessons.dart';
-import 'package:todo_app/widgets/custButton.dart';
+import 'package:todo_app/widgets/app_button.dart';
+import 'package:todo_app/widgets/item_progress_indicatod.dart';
 
 class DetailPage extends StatelessWidget {
   final LessonsItem lesson;
   const DetailPage({super.key, required this.lesson});
   @override
   Widget build(BuildContext context) {
-    // -- Linear Progress
-    final levelIndicator = LinearProgressIndicator(
-        backgroundColor: progressLineBackgroundColor,
-        value: lesson.indicatorValue ?? 0.5,
-        valueColor: const AlwaysStoppedAnimation(secondaryColor));
     // --- Course Price
     final coursePrice = Container(
       padding: const EdgeInsets.all(7.0),
@@ -56,7 +51,7 @@ class DetailPage extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Expanded(flex: 1, child: levelIndicator),
+            Expanded(flex: 1, child: AppProgressIndicator(indicatorValue: lesson.indicatorValue)),
             Expanded(
                 flex: 4,
                 child: Padding(
@@ -113,7 +108,6 @@ class DetailPage extends StatelessWidget {
       height: MediaQuery.of(context).size.height * 0.3,
       child: Text(
         lesson.content ?? "Content",
-        overflow: TextOverflow.fade,
         style: const TextStyle(fontSize: 18.0),
       ),
     );

@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:todo_app/constants.dart';
+import 'package:todo_app/util/constants.dart';
 import 'package:todo_app/data/models/lessons.dart';
 
 class Common {

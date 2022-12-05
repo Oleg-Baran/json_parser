@@ -1,6 +1,6 @@
 class Dictionary {
   static const saveTask = 'SAVE TASK';
-  static const titleToDo = 'ToDo Tasks';
+  static const titleToDo = 'Tasks';
   static const titleCalendar = 'Calendar';
   static const titleWallet = 'Wallet';
   static const titleAccount = 'Account';

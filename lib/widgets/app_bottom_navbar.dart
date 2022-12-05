@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/constants.dart';
+import 'package:todo_app/util/constants.dart';
 import 'package:todo_app/data/dictionary.dart';
 
 class CustBottomNavBar extends StatelessWidget {

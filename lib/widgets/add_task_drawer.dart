@@ -1,20 +1,17 @@
 // ignore_for_file: file_names
 
-import 'dart:async';
-
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_app/data/dictionary.dart';
 
-import '../constants.dart';
-import '../data/models/lessons.dart';
+import '../screens/lessons_screen/lessons_screen_view_model.dart';
+import '../util/constants.dart';
 import '../util/common.dart';
-import 'custButton.dart';
+import 'app_button.dart';
 
 class CastDrawer extends StatefulWidget {
-  const CastDrawer(
-      {super.key, required this.toDoList, required this.controller});
-  final List<LessonsItem> toDoList;
-  final StreamController<List<LessonsItem>> controller;
+  const CastDrawer({super.key});
+
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white);
 
@@ -24,23 +21,22 @@ class CastDrawer extends StatefulWidget {
 
 class _CastDrawerState extends State<CastDrawer> {
   final titleController = TextEditingController();
-
   bool _isTitleEditedAfterSubmit = false;
   final _formKey = GlobalKey<FormState>();
 
-  void readCtx(BuildContext context) {
+  void readCtx(BuildContext context, LessonsScreenViewModel lessons) {
     if (titleController.text.trim() == '') {
       titleController.text = Dictionary.newTask;
     }
-    widget.controller.sink
-        .add(widget.toDoList..add(Common.getRandomItem(titleController.text)));
-
+    // todo: add item to list
+    lessons.addItem(Common.getRandomItem(titleController.text));
     titleController.clear();
     Navigator.pop(context);
   }
 
   @override
   Widget build(BuildContext context) {
+    final LessonsScreenViewModel lessons = Provider.of<LessonsScreenViewModel>(context);
     return InkWell(
       onTap: () => Common.hideKeyboard(context),
       child: Drawer(
@@ -69,14 +65,13 @@ class _CastDrawerState extends State<CastDrawer> {
                       ? null
                       : Dictionary.fieldInfoForUser),
                   onChanged: (v) => {
-                    if (v == '' && v.trim().isEmpty) {
-                        setState(() => _isTitleEditedAfterSubmit = false)
-                    } else {
-                      setState(() => _isTitleEditedAfterSubmit = true)
-                    }
+                    if (v == '' && v.trim().isEmpty)
+                      {setState(() => _isTitleEditedAfterSubmit = false)}
+                    else
+                      {setState(() => _isTitleEditedAfterSubmit = true)}
                   },
                   onEditingComplete: () => _formKey.currentState!.validate()
-                      ? readCtx(context)
+                      ? readCtx(context, lessons)
                       : null,
                   maxLength: 30,
                   decoration:
@@ -88,9 +83,8 @@ class _CastDrawerState extends State<CastDrawer> {
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
               child: CastButton(
                 text: Dictionary.saveTask,
-                buttonAction: () => _formKey.currentState!.validate()
-                      ? readCtx(context)
-                      : null,
+                buttonAction: () =>
+                    _formKey.currentState!.validate() ? readCtx(context, lessons) : null,
               ),
             )
           ],

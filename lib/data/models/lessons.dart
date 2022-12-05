@@ -23,6 +23,9 @@ class LessonsItem {
   int? price;
   String? content;
   bool? complete;
+  bool? isChecked;
+  // local value
+  bool? isEdit = false;
 
   LessonsItem(
       {this.title,
@@ -30,7 +33,8 @@ class LessonsItem {
       this.indicatorValue,
       this.price,
       this.content,
-      this.complete = true});
+      this.complete = true,
+      this.isChecked = false});
 
   LessonsItem.fromJson(Map<String, dynamic> json) {
     title = json['title'];
@@ -39,6 +43,7 @@ class LessonsItem {
     price = json['price'];
     content = json['content'];
     complete = json['complete'];
+    isChecked = json['isChecked'];
   }
 
   Map<String, dynamic> toJson() {
@@ -49,6 +54,7 @@ class LessonsItem {
     data['price'] = price;
     data['content'] = content;
     data['complete'] = complete;
+    data['isChecked'] = isChecked;
     return data;
   }
 }
