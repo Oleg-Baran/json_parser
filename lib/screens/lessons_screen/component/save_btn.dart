@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-
-import '../lessons_screen_view_model.dart';
+import 'package:todo_app/screens/lessons_screen/cubit/lessons_screen_cubit.dart';
 
 class SaveBtn extends StatelessWidget {
-  const SaveBtn({super.key, required this.vm});
-  final LessonsScreenViewModel vm;
+  const SaveBtn({super.key, required this.cubit});
+  final LessonsScreenCubit cubit;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +15,7 @@ class SaveBtn extends StatelessWidget {
           height: 40,
           child: ElevatedButton(
             onPressed: () {
-              vm.editMode(mode: false);
+              cubit.editMode(mode: false);
             },
             style: ButtonStyle(
               backgroundColor: MaterialStateColor.resolveWith(

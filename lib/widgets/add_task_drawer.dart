@@ -1,10 +1,10 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_app/data/dictionary.dart';
 
-import '../screens/lessons_screen/lessons_screen_view_model.dart';
+import '../screens/lessons_screen/cubit/lessons_screen_cubit.dart';
 import '../util/constants.dart';
 import '../util/common.dart';
 import 'app_button.dart';
@@ -24,19 +24,19 @@ class _CastDrawerState extends State<CastDrawer> {
   bool _isTitleEditedAfterSubmit = false;
   final _formKey = GlobalKey<FormState>();
 
-  void readCtx(BuildContext context, LessonsScreenViewModel lessons) {
+  void readCtx(BuildContext context, LessonsScreenCubit cubit) {
     if (titleController.text.trim() == '') {
       titleController.text = Dictionary.newTask;
     }
     // todo: add item to list
-    lessons.addItem(Common.getRandomItem(titleController.text));
+    cubit.addItem(Common.getRandomItem(titleController.text));
     titleController.clear();
     Navigator.pop(context);
   }
 
   @override
   Widget build(BuildContext context) {
-    final LessonsScreenViewModel lessons = Provider.of<LessonsScreenViewModel>(context);
+    final LessonsScreenCubit lessons = context.read<LessonsScreenCubit>();
     return InkWell(
       onTap: () => Common.hideKeyboard(context),
       child: Drawer(

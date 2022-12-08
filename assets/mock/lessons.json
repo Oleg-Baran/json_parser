@@ -6,7 +6,8 @@
             "indicatorValue": 0.33,
             "price": 20,
             "content": "Start by taking a couple of minutes to read the info in this section. Launch your app and click on the Settings menu.  While on the settings page, click the Save button.  You should see a circular progress indicator display in the middle of the page and the user interface elements cannot be clicked due to the modal barrier that is constructed.",
-            "complete": true
+            "complete": true,
+            "isChecked": false
         },
         {
             "title": "Observation at Junctions",
@@ -14,7 +15,8 @@
             "indicatorValue": 0.33,
             "price": 50,
             "content": "Start by taking a couple of minutes to read the info in this section. Launch your app and click on the Settings menu.  While on the settings page, click the Save button.  You should see a circular progress indicator display in the middle of the page and the user interface elements cannot be clicked due to the modal barrier that is constructed.",
-            "complete": true
+            "complete": true,
+            "isChecked": false
         },
         {
             "title": "Reverse parallel Parking",
@@ -22,7 +24,8 @@
             "indicatorValue": 0.66,
             "price": 30,
             "content": "Start by taking a couple of minutes to read the info in this section. Launch your app and click on the Settings menu.  While on the settings page, click the Save button.  You should see a circular progress indicator display in the middle of the page and the user interface elements cannot be clicked due to the modal barrier that is constructed.",
-            "complete": true
+            "complete": true,
+            "isChecked": false
         },
         {
             "title": "Reversing around the corner",
@@ -30,7 +33,8 @@
             "indicatorValue": 0.66,
             "price": 30,
             "content": "Start by taking a couple of minutes to read the info in this section. Launch your app and click on the Settings menu.  While on the settings page, click the Save button.  You should see a circular progress indicator display in the middle of the page and the user interface elements cannot be clicked due to the modal barrier that is constructed.",
-            "complete": true
+            "complete": true,
+            "isChecked": false
         },
         {
             "title": "Incorrect Use of Signal",
@@ -38,7 +42,8 @@
             "indicatorValue": 0.33,
             "price": 20,
             "content": "Start by taking a couple of minutes to read the info in this section. Launch your app and click on the Settings menu.  While on the settings page, click the Save button.  You should see a circular progress indicator display in the middle of the page and the user interface elements cannot be clicked due to the modal barrier that is constructed.",
-            "complete": true
+            "complete": true,
+            "isChecked": false
         },
         {
             "title": "Engine Challenges",
@@ -46,7 +51,8 @@
             "indicatorValue": 1.0,
             "price": 50,
             "content": "Start by taking a couple of minutes to read the info in this section. Launch your app and click on the Settings menu.  While on the settings page, click the Save button.  You should see a circular progress indicator display in the middle of the page and the user interface elements cannot be clicked due to the modal barrier that is constructed.",
-            "complete": true
+            "complete": true,
+            "isChecked": false
         },
         {
             "title": "Self Driving Car",
@@ -54,7 +60,8 @@
             "indicatorValue": 1.0,
             "price": 50,
             "content": "Start by taking a couple of minutes to read the info in this section. Launch your app and click on the Settings menu.  While on the settings page, click the Save button.  You should see a circular progress indicator display in the middle of the page and the user interface elements cannot be clicked due to the modal barrier that is constructed.",
-            "complete": true
+            "complete": true,
+            "isChecked": false
         }
     ]
 }

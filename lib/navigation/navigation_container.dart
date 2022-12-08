@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:todo_app/screens/lessons_screen/lessons_screen_view_model.dart';
 import 'package:todo_app/util/constants.dart';
 import 'package:todo_app/data/dictionary.dart';
-import 'package:todo_app/data/models/lessons.dart';
 import 'package:todo_app/widgets/app_bottom_navbar.dart';
 import 'package:todo_app/screens/lessons_screen/lessons_screen.dart';
 
@@ -15,18 +12,15 @@ class NavigationContainer extends StatefulWidget {
 }
 
 class _NavigationContainerState extends State<NavigationContainer> {
-  final List<LessonsItem> lessons = [];
   int _selectedIndex = 0;
+
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white);
 
   List<Widget> _widgetOptions(BuildContext ctx) {
-    LessonsScreenViewModel viemModel = Provider.of<LessonsScreenViewModel>(ctx);
     return [
       //-- 1 Tab
-      LessonsScreen(
-        lessons: viemModel,
-      ),
+      const LessonsScreen(),
       //-- 2 Tab
       const Text(
         Dictionary.willBeAddedLater,

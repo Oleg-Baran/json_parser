@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/screens/lessons_screen/lessons_screen_view_model.dart';
 import 'package:todo_app/util/constants.dart';
 import 'package:todo_app/data/dictionary.dart';
 import 'package:todo_app/util/common.dart';
@@ -7,16 +6,23 @@ import 'package:todo_app/widgets/item_progress_indicatod.dart';
 
 import '../data/models/lessons.dart';
 import '../screens/detail_screen/detail_screen.dart';
+import '../screens/lessons_screen/cubit/lessons_screen_cubit.dart';
 
-class ToDoItem extends StatelessWidget {
-  const ToDoItem({super.key, required this.lessonsItem, required this.vm});
+class ToDoItem extends StatefulWidget {
+  const ToDoItem({super.key, required this.lessonsItem, required this.lessonsScreenCubit});
   final LessonsItem lessonsItem;
-  final LessonsScreenViewModel vm;
+  final LessonsScreenCubit lessonsScreenCubit;
+  //final LessonsScreenViewModel vm;
 
+  @override
+  State<ToDoItem> createState() => _ToDoItemState();
+}
+
+class _ToDoItemState extends State<ToDoItem> {
   // InkWell(
   @override
   Widget build(BuildContext context) {
-    bool editMode = lessonsItem.isEdit!;
+    bool editMode = widget.lessonsItem.isEdit!;
     // --- Card
     return Dismissible(
       key: UniqueKey(),
@@ -32,7 +38,7 @@ class ToDoItem extends StatelessWidget {
       ),
       onDismissed: (direction) {
         // Remove the item from the data source.
-          vm.remove(lessonsItem);
+          widget.lessonsScreenCubit.remove(widget.lessonsItem);
         //-- Show a snackbar.
         ScaffoldMessenger.of(context)
             .showSnackBar(const SnackBar(content: Text('Task deleted')));
@@ -40,15 +46,15 @@ class ToDoItem extends StatelessWidget {
       //-- Set logic for useractions
       child: InkWell(
         onDoubleTap: () {
-          vm.setCompleteItem(lessonsItem);
+          widget.lessonsScreenCubit.setCompleteItem(widget.lessonsItem);
         },
         onLongPress: () {
           if (editMode == false) {
             editMode = !editMode;
-            vm.editMode(mode: editMode, lessonsItem: lessonsItem);
+            widget.lessonsScreenCubit.editMode(mode: editMode, lessonsItem: widget.lessonsItem);
           } else {
-            vm.setCheckItem(lessonsItem);
-            vm.isAllCheckedFalse();
+            widget.lessonsScreenCubit.setCheckItem(widget.lessonsItem);
+            widget.lessonsScreenCubit.isAllCheckedFalse();
           }
         },
         // -- Card
@@ -61,7 +67,7 @@ class ToDoItem extends StatelessWidget {
           // --- Container
           child: Container(
             decoration: BoxDecoration(
-                color: lessonsItem.complete! ? itemColor : unCompleteItemColor),
+                color: widget.lessonsItem.complete! ? itemColor : unCompleteItemColor),
             child: ListTile(
               contentPadding:
                   const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
@@ -72,18 +78,18 @@ class ToDoItem extends StatelessWidget {
                     border: Border(
                         right: BorderSide(width: 1.0, color: Colors.white24))),
                 //-- Edit Mode: CheckBox | Icon
-                child: lessonsItem.isEdit!
+                child: widget.lessonsItem.isEdit!
                     ? Checkbox(
                         activeColor: mainColor,
-                        value: lessonsItem.isChecked,
+                        value: widget.lessonsItem.isChecked,
                         onChanged: (_) {},
                       )
                     : Common.getIconsForItem(
-                        lessonsItem.level ?? Dictionary.lvlBeginner),
+                        widget.lessonsItem.level ?? Dictionary.lvlBeginner),
               ),
               // --- ToDo Title
               title: Text(
-                lessonsItem.title ?? Dictionary.newTask,
+                widget.lessonsItem.title ?? Dictionary.newTask,
                 style: const TextStyle(
                     color: Colors.white, fontWeight: FontWeight.bold),
               ),
@@ -93,12 +99,12 @@ class ToDoItem extends StatelessWidget {
                   Expanded(
                       flex: 1,
                       child: AppProgressIndicator(
-                          indicatorValue: lessonsItem.indicatorValue)),
+                          indicatorValue: widget.lessonsItem.indicatorValue)),
                   Expanded(
                     flex: 4,
                     child: Padding(
                         padding: const EdgeInsets.only(left: 10.0),
-                        child: Text(lessonsItem.level ?? Dictionary.lvl,
+                        child: Text(widget.lessonsItem.level ?? Dictionary.lvl,
                             style: const TextStyle(color: Colors.white))),
                   )
                 ],
@@ -111,7 +117,7 @@ class ToDoItem extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => DetailPage(lesson: lessonsItem),
+                    builder: (context) => DetailPage(lesson: widget.lessonsItem),
                   ),
                 );
               },
