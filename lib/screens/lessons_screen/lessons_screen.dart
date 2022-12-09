@@ -10,19 +10,19 @@ import '../../data/models/lessons.dart';
 import '../../widgets/tasks_appbar.dart';
 import 'cubit/lessons_screen_cubit.dart';
 
-class LessonsScreen extends StatefulWidget {
-  const LessonsScreen({super.key});
+class LessonsPage extends StatefulWidget {
+  const LessonsPage({super.key});
 
   @override
-  State<LessonsScreen> createState() => _LessonsScreenState();
+  State<LessonsPage> createState() => _LessonsPageState();
 }
 
-class _LessonsScreenState extends State<LessonsScreen> {
-  late LessonsScreenCubit cubit;
+class _LessonsPageState extends State<LessonsPage> {
+  late LessonsPageCubit cubit;
 
   @override
   void initState() {
-    cubit = context.read<LessonsScreenCubit>();
+    cubit = context.read<LessonsPageCubit>();
     super.initState();
   }
 
@@ -33,17 +33,23 @@ class _LessonsScreenState extends State<LessonsScreen> {
       appBar: const CustAppBar(title: Dictionary.titleToDo),
       endDrawer: const CastDrawer(),
       //body: listView(widget.viewModel),
-      body: BlocBuilder<LessonsScreenCubit, LessonsScreenState>(
+      body: BlocBuilder<LessonsPageCubit, LessonsScreenState>(
         builder: (context, state) {
-          if (state is LessonsScreenLoading) {
+          if (state.viewState.isLoading) {
             return const Center(
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(
+                color: secondaryColor,
+              ),
             );
-          } else if (state is LessonsScreenError) {
+          } else if (state.viewState.isError) {
             return const Center(
-              child: Icon(Icons.close),
+              child: Icon(
+                Icons.error_outline,
+                color: redColor,
+                size: 40,
+              ),
             );
-          } else if (state is LessonsScreenLoaded) {
+          } else if (state.viewState.isLoaded) {
             final lessonsList = state.lessonsList;
             return listView(lessonsList, cubit);
           } else {
@@ -54,7 +60,7 @@ class _LessonsScreenState extends State<LessonsScreen> {
     );
   }
 
-  ListView listView(List<LessonsItem> lessonsList, LessonsScreenCubit cubit) {
+  ListView listView(List<LessonsItem> lessonsList, LessonsPageCubit cubit) {
     return ListView.builder(
       padding: const EdgeInsets.all(4),
       itemCount: cubit.isEdit

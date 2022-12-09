@@ -1,18 +1,19 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:todo_app/util/auto_routes.gr.dart';
 import 'package:todo_app/util/constants.dart';
 import 'package:todo_app/data/dictionary.dart';
 import 'package:todo_app/util/common.dart';
 import 'package:todo_app/widgets/item_progress_indicatod.dart';
 
 import '../data/models/lessons.dart';
-import '../screens/detail_screen/detail_screen.dart';
 import '../screens/lessons_screen/cubit/lessons_screen_cubit.dart';
 
 class ToDoItem extends StatefulWidget {
-  const ToDoItem({super.key, required this.lessonsItem, required this.lessonsScreenCubit});
+  const ToDoItem(
+      {super.key, required this.lessonsItem, required this.lessonsScreenCubit});
   final LessonsItem lessonsItem;
-  final LessonsScreenCubit lessonsScreenCubit;
-  //final LessonsScreenViewModel vm;
+  final LessonsPageCubit lessonsScreenCubit;
 
   @override
   State<ToDoItem> createState() => _ToDoItemState();
@@ -22,7 +23,7 @@ class _ToDoItemState extends State<ToDoItem> {
   // InkWell(
   @override
   Widget build(BuildContext context) {
-    bool editMode = widget.lessonsItem.isEdit!;
+    bool editMode = widget.lessonsScreenCubit.isEdit;
     // --- Card
     return Dismissible(
       key: UniqueKey(),
@@ -38,7 +39,7 @@ class _ToDoItemState extends State<ToDoItem> {
       ),
       onDismissed: (direction) {
         // Remove the item from the data source.
-          widget.lessonsScreenCubit.remove(widget.lessonsItem);
+        widget.lessonsScreenCubit.remove(widget.lessonsItem);
         //-- Show a snackbar.
         ScaffoldMessenger.of(context)
             .showSnackBar(const SnackBar(content: Text('Task deleted')));
@@ -51,7 +52,8 @@ class _ToDoItemState extends State<ToDoItem> {
         onLongPress: () {
           if (editMode == false) {
             editMode = !editMode;
-            widget.lessonsScreenCubit.editMode(mode: editMode, lessonsItem: widget.lessonsItem);
+            widget.lessonsScreenCubit
+                .editMode(mode: editMode, lessonsItem: widget.lessonsItem);
           } else {
             widget.lessonsScreenCubit.setCheckItem(widget.lessonsItem);
             widget.lessonsScreenCubit.isAllCheckedFalse();
@@ -67,7 +69,9 @@ class _ToDoItemState extends State<ToDoItem> {
           // --- Container
           child: Container(
             decoration: BoxDecoration(
-                color: widget.lessonsItem.complete! ? itemColor : unCompleteItemColor),
+                color: widget.lessonsItem.complete!
+                    ? itemColor
+                    : unCompleteItemColor),
             child: ListTile(
               contentPadding:
                   const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
@@ -78,7 +82,7 @@ class _ToDoItemState extends State<ToDoItem> {
                     border: Border(
                         right: BorderSide(width: 1.0, color: Colors.white24))),
                 //-- Edit Mode: CheckBox | Icon
-                child: widget.lessonsItem.isEdit!
+                child: widget.lessonsScreenCubit.isEdit
                     ? Checkbox(
                         activeColor: mainColor,
                         value: widget.lessonsItem.isChecked,
@@ -114,12 +118,7 @@ class _ToDoItemState extends State<ToDoItem> {
                   color: Colors.white, size: 30.0),
               // --- Open DetailPage
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => DetailPage(lesson: widget.lessonsItem),
-                  ),
-                );
+                AutoRouter.of(context).push(DetailRoute(lesson: widget.lessonsItem));
               },
             ),
           ),

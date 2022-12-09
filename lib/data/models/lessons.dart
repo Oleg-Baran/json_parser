@@ -24,17 +24,16 @@ class LessonsItem {
   String? content;
   bool? complete;
   bool? isChecked;
-  // local value
-  bool? isEdit = false;
 
-  LessonsItem(
-      {this.title,
-      this.level,
-      this.indicatorValue,
-      this.price,
-      this.content,
-      this.complete = true,
-      this.isChecked = false});
+  LessonsItem({
+    this.title,
+    this.level,
+    this.indicatorValue,
+    this.price,
+    this.content,
+    this.complete = true,
+    this.isChecked = false,
+  });
 
   LessonsItem.fromJson(Map<String, dynamic> json) {
     title = json['title'];

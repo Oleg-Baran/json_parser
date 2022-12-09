@@ -20,7 +20,7 @@ class _NavigationContainerState extends State<NavigationContainer> {
   List<Widget> _widgetOptions(BuildContext ctx) {
     return [
       //-- 1 Tab
-      const LessonsScreen(),
+      const LessonsPage(),
       //-- 2 Tab
       const Text(
         Dictionary.willBeAddedLater,

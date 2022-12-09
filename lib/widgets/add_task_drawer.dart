@@ -1,5 +1,6 @@
 // ignore_for_file: file_names
 
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_app/data/dictionary.dart';
@@ -24,19 +25,19 @@ class _CastDrawerState extends State<CastDrawer> {
   bool _isTitleEditedAfterSubmit = false;
   final _formKey = GlobalKey<FormState>();
 
-  void readCtx(BuildContext context, LessonsScreenCubit cubit) {
+  void readCtx(BuildContext context, LessonsPageCubit cubit) {
     if (titleController.text.trim() == '') {
       titleController.text = Dictionary.newTask;
     }
     // todo: add item to list
     cubit.addItem(Common.getRandomItem(titleController.text));
     titleController.clear();
-    Navigator.pop(context);
+    AutoRouter.of(context).pop();
   }
 
   @override
   Widget build(BuildContext context) {
-    final LessonsScreenCubit lessons = context.read<LessonsScreenCubit>();
+    final LessonsPageCubit lessons = context.read<LessonsPageCubit>();
     return InkWell(
       onTap: () => Common.hideKeyboard(context),
       child: Drawer(
@@ -83,8 +84,9 @@ class _CastDrawerState extends State<CastDrawer> {
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
               child: CastButton(
                 text: Dictionary.saveTask,
-                buttonAction: () =>
-                    _formKey.currentState!.validate() ? readCtx(context, lessons) : null,
+                buttonAction: () => _formKey.currentState!.validate()
+                    ? readCtx(context, lessons)
+                    : null,
               ),
             )
           ],

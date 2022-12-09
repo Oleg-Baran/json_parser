@@ -7,8 +7,8 @@ import '../../../service/getDataFromJson.dart';
 
 part 'lessons_screen_state.dart';
 
-class LessonsScreenCubit extends Cubit<LessonsScreenState> {
-  LessonsScreenCubit(this.service) : super(LessonsScreenInitial());
+class LessonsPageCubit extends Cubit<LessonsScreenState> {
+  LessonsPageCubit(this.service) : super(LessonsScreenState());
   final DataResponse service;
 
   bool isEdit = false;
@@ -16,52 +16,59 @@ class LessonsScreenCubit extends Cubit<LessonsScreenState> {
 
   Future<void> getLessons() async {
     try {
-      emit(LessonsScreenLoading());
+      emit(LessonsScreenState(viewState: ViewState.loading));
+      await Future.delayed(const Duration(seconds: 1));
       final response = await DataResponse().getLessonItemsFromJsonFile();
-      print(response);
       lessonsList.addAll(response);
-      emit(LessonsScreenLoaded(lessonsList: lessonsList));
+      print(lessonsList);
+      emit(LessonsScreenState(
+          viewState: ViewState.loaded, lessonsList: lessonsList));
     } catch (e) {
       print(e);
-      emit(LessonsScreenError());
+      emit(LessonsScreenState(viewState: ViewState.error));
     }
   }
 
   addItem(LessonsItem lessonItem) {
     try {
+      emit(LessonsScreenState(viewState: ViewState.loading));
       lessonsList.add(lessonItem);
-      emit(LessonsScreenLoaded(lessonsList: lessonsList));
+      emit(LessonsScreenState(
+          viewState: ViewState.loaded, lessonsList: lessonsList));
     } catch (e) {
-      emit(LessonsScreenError());
+      emit(LessonsScreenState(viewState: ViewState.error));
     }
   }
 
   remove(LessonsItem item) {
     try {
       lessonsList.remove(item);
-      emit(LessonsScreenLoaded(lessonsList: lessonsList));
+      emit(LessonsScreenState(
+          viewState: ViewState.loaded, lessonsList: lessonsList));
     } catch (e) {
-      emit(LessonsScreenError());
+      emit(LessonsScreenState(viewState: ViewState.error));
     }
   }
 
   setCompleteItem(LessonsItem lessonsItem) {
     try {
       lessonsItem.complete = !lessonsItem.complete!;
-      emit(LessonsScreenLoaded(lessonsList: lessonsList));
+      emit(LessonsScreenState(
+          viewState: ViewState.loaded, lessonsList: lessonsList));
     } catch (e) {
       print(e);
-      emit(LessonsScreenError());
+      emit(LessonsScreenState(viewState: ViewState.error));
     }
   }
 
   setCheckItem(LessonsItem lessonsItem) {
     try {
       lessonsItem.isChecked = !lessonsItem.isChecked!;
-      emit(LessonsScreenLoaded(lessonsList: lessonsList));
+      emit(LessonsScreenState(
+          viewState: ViewState.loaded, lessonsList: lessonsList));
     } catch (e) {
       print(e);
-      emit(LessonsScreenError());
+      emit(LessonsScreenState(viewState: ViewState.error));
     }
   }
 
@@ -77,25 +84,21 @@ class LessonsScreenCubit extends Cubit<LessonsScreenState> {
     modeTrue() {
       try {
         lessonsItem?.isChecked = true;
-        for (var element in lessonsList) {
-          element.isEdit = mode;
-        }
-        emit(LessonsScreenLoaded(lessonsList: lessonsList));
+        emit(LessonsScreenState(
+            viewState: ViewState.loaded, lessonsList: lessonsList));
       } catch (e) {
         print(e);
-        emit(LessonsScreenError());
+        emit(LessonsScreenState(viewState: ViewState.error));
       }
     }
 
     modeFalse() {
       try {
-        for (var element in lessonsList) {
-          element.isEdit = mode;
-        }
-        emit(LessonsScreenLoaded(lessonsList: lessonsList));
+        emit(LessonsScreenState(
+            viewState: ViewState.loaded, lessonsList: lessonsList));
       } catch (e) {
         print(e);
-        emit(LessonsScreenError());
+        emit(LessonsScreenState(viewState: ViewState.error));
       }
     }
 

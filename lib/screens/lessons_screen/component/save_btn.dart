@@ -3,7 +3,7 @@ import 'package:todo_app/screens/lessons_screen/cubit/lessons_screen_cubit.dart'
 
 class SaveBtn extends StatelessWidget {
   const SaveBtn({super.key, required this.cubit});
-  final LessonsScreenCubit cubit;
+  final LessonsPageCubit cubit;
 
   @override
   Widget build(BuildContext context) {
